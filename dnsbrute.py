@@ -1,11 +1,15 @@
 import dns.resolver
 
 res = dns.resolver.Resolver()
-alvo = "bancocn.com"
+arquivo = open("wordlist.txt", "r")
+subdominios = arquivo.read().splitlines()
 
-try:
-    resultado = res.resolve(alvo, "A")
-    for info in resultado:
-        print(alvo, "->", info)
-except:
-    pass
+alvo = input("Alvo: ")
+for subdominio in subdominios:
+    try:
+        sub_alvo = subdominio + "." + alvo
+        resultado = res.resolve(sub_alvo, "A")
+        for ip in resultado:
+            print("Subdmoninios: ", sub_alvo,'\n', "IP: ", "->", ip)
+    except:
+        pass
